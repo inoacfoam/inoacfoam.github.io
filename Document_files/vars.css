@@ -1,0 +1,78 @@
+/* Figma Styles of your File */
+:root {
+  /* Colors */
+  --primary: #4dbdf1;
+  --grey-95: #f9fafa;
+  --grey-90: #eef0f1;
+  --grey-60: #909ca2;
+  --grey-50: #6b8294;
+  --grey-40: #556877;
+  --background: #f6f7f9;
+  --stroke: #b7bac8;
+  --black: #222222;
+  --dark-blue: #34476d;
+  --white: #ffffff;
+  --red-alert: #ec7979;
+
+  /* Fonts */
+  --heading-1-bold-font-family: Inter-Bold, sans-serif;
+  --heading-1-bold-font-size: 24px;
+  --heading-1-bold-line-height: normal;
+  --heading-1-bold-font-weight: 700;
+  --heading-1-bold-font-style: normal;
+  --heading-2-bold-font-family: Inter-Bold, sans-serif;
+  --heading-2-bold-font-size: 24px;
+  --heading-2-bold-line-height: normal;
+  --heading-2-bold-font-weight: 700;
+  --heading-2-bold-font-style: normal;
+  --heading-2-semibold-font-family: Inter-SemiBold, sans-serif;
+  --heading-2-semibold-font-size: 24px;
+  --heading-2-semibold-line-height: normal;
+  --heading-2-semibold-font-weight: 600;
+  --heading-2-semibold-font-style: normal;
+  --text-xxl-semibold-font-family: Inter-SemiBold, sans-serif;
+  --text-xxl-semibold-font-size: 68px;
+  --text-xxl-semibold-line-height: normal;
+  --text-xxl-semibold-font-weight: 600;
+  --text-xxl-semibold-font-style: normal;
+  --text-lager-semibold-font-family: Inter-SemiBold, sans-serif;
+  --text-lager-semibold-font-size: 24px;
+  --text-lager-semibold-line-height: normal;
+  --text-lager-semibold-font-weight: 600;
+  --text-lager-semibold-font-style: normal;
+  --text-medium-medium-font-family: Inter-SemiBold, sans-serif;
+  --text-medium-medium-font-size: 20px;
+  --text-medium-medium-line-height: normal;
+  --text-medium-medium-font-weight: 600;
+  --text-medium-medium-font-style: normal;
+  --text-medium-regular-font-family: Inter-Regular, sans-serif;
+  --text-medium-regular-font-size: 20px;
+  --text-medium-regular-line-height: normal;
+  --text-medium-regular-font-weight: 400;
+  --text-medium-regular-font-style: normal;
+  --text-small-semibold-font-family: Inter-SemiBold, sans-serif;
+  --text-small-semibold-font-size: 18px;
+  --text-small-semibold-line-height: normal;
+  --text-small-semibold-font-weight: 600;
+  --text-small-semibold-font-style: normal;
+  --text-small-regular-font-family: Inter-Regular, sans-serif;
+  --text-small-regular-font-size: 18px;
+  --text-small-regular-line-height: normal;
+  --text-small-regular-font-weight: 400;
+  --text-small-regular-font-style: normal;
+  --text-xs-semibold-font-family: Inter-SemiBold, sans-serif;
+  --text-xs-semibold-font-size: 16px;
+  --text-xs-semibold-line-height: normal;
+  --text-xs-semibold-font-weight: 600;
+  --text-xs-semibold-font-style: normal;
+  --text-xs-reguler-font-family: Inter-Regular, sans-serif;
+  --text-xs-reguler-font-size: 16px;
+  --text-xs-reguler-line-height: normal;
+  --text-xs-reguler-font-weight: 400;
+  --text-xs-reguler-font-style: normal;
+
+  /* Effects */
+  --shadow-10-box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  --shadow-5-box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
+}
+/* Figma Color Variables of your File */
