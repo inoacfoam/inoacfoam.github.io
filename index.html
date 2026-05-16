@@ -244,23 +244,17 @@
 		</form>
     </div>
   </div>
-
-
-
-
 <script>
-	let DateOfBirth = new Date()
-	document.getElementById("dateOfBirth").value = DateOfBirth.toISOString().split('T')[0];
-	
-	const dateInput = document.getElementById('dateOfBirth');
+let DateOfBirth = new Date()
+document.getElementById("dateOfBirth").value = DateOfBirth.toISOString().split('T')[0];
 
-	// Ambil tanggal hari ini
-	const today = new Date();
-	const formattedToday = today.toISOString().split('T')[0];
+const dateInput = document.getElementById('dateOfBirth');
 
-	// Tetapkan tanggal maksimum ke hari ini (tidak bisa pilih ke depan)
-	dateInput.max = formattedToday;
-<script>
+const today = new Date();
+const formattedToday = today.toISOString().split('T')[0];
+
+dateInput.max = formattedToday;
+
 function showSuccess() {
   document.querySelector('.selamat').innerText = 'SELAMAT';
 
@@ -270,7 +264,8 @@ function showSuccess() {
   document.querySelector('.garansi-produk-ini-adalah').innerText =
     'Masa Berlaku Garansi Produk';
 
-  document.querySelector('form').scrollIntoView({ behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
-</body></html>
+</body>
+</html>
