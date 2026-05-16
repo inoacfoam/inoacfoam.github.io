@@ -237,7 +237,7 @@
 		  <br>
 			<div class="frame-38825">
 			  <div class="frame-38823">
-				<button type="button" onclick="alert('Data berhasil direkam sementara')" class="submit">SUBMIT</button>
+				<button type="button" onclick="showSuccess()" class="submit">SUBMIT</button>
 			  </div>
 			</div>
 		  </div>
@@ -260,5 +260,18 @@
 
 	// Tetapkan tanggal maksimum ke hari ini (tidak bisa pilih ke depan)
 	dateInput.max = formattedToday;
+<script>
+function showSuccess() {
+  document.querySelector('.selamat').innerText = 'SELAMAT';
+
+  document.querySelector('.anda-telah-membeli-produk-asli-dengan').innerHTML =
+    '<strong style="font-size:24px;color:#000;">Anda Berhasil Registrasi</strong>';
+
+  document.querySelector('.garansi-produk-ini-adalah').innerText =
+    'Masa Berlaku Garansi Produk';
+
+  document.querySelector('form').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
 </script>
 </body></html>
