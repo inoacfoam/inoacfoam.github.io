@@ -237,7 +237,7 @@
 		  <br>
 			<div class="frame-38825">
 			  <div class="frame-38823">
-				<button type="button" onclick="showSuccess()" class="submit">SUBMIT</button>
+				<button type="button" id="submitBtn" class="submit">SUBMIT</button>
 			  </div>
 			</div>
 		  </div>
@@ -245,27 +245,20 @@
     </div>
   </div>
 <script>
-let DateOfBirth = new Date()
-document.getElementById("dateOfBirth").value = DateOfBirth.toISOString().split('T')[0];
+document.getElementById("submitBtn").addEventListener("click", function () {
+  document.querySelector(".selamat").innerText = "SELAMAT";
 
-const dateInput = document.getElementById('dateOfBirth');
-
-const today = new Date();
-const formattedToday = today.toISOString().split('T')[0];
-
-dateInput.max = formattedToday;
-
-function showSuccess() {
-  document.querySelector('.selamat').innerText = 'SELAMAT';
-
-  document.querySelector('.anda-telah-membeli-produk-asli-dengan').innerHTML =
+  document.querySelector(".anda-telah-membeli-produk-asli-dengan").innerHTML =
     '<strong style="font-size:24px;color:#000;">Anda Berhasil Registrasi</strong>';
 
-  document.querySelector('.garansi-produk-ini-adalah').innerText =
-    'Masa Berlaku Garansi Produk';
+  document.querySelector(".garansi-produk-ini-adalah").innerText =
+    "Masa Berlaku Garansi Produk";
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
 </script>
 </body>
 </html>
