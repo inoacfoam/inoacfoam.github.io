@@ -1,274 +1,444 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="Document_files/vars.css">
-  <link rel="stylesheet" href="Document_files/style.css">
-  
-  
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INOAC Warranty</title>
+
   <style>
-   a,
-   button,
-   input,
-   select,
-   h1,
-   h2,
-   h3,
-   h4,
-   h5,
-   * {
-       box-sizing: border-box;
-       margin: 0;
-       padding: 0;
-       border: none;
-       text-decoration: none;
-       background: none;
-   
-       -webkit-font-smoothing: antialiased;
-   }
-   
-   menu, ol, ul {
-       list-style-type: none;
-       margin: 0;
-       padding: 0;
-   }
-   </style>
-  <title>Document</title>
-<style data-emotion="css" data-s=""></style></head>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #1f2f46;
+      overflow-x: hidden;
+    }
+
+    .page {
+      width: 490px;
+      max-width: 100%;
+      margin: 0 auto;
+      background: #ffffff;
+      overflow: hidden;
+      position: relative;
+      padding-bottom: 40px;
+    }
+
+    .hero {
+      position: relative;
+      height: 380px;
+      background: #ffffff;
+    }
+
+    .hero .ball {
+      position: absolute;
+      width: 290px;
+      left: 45px;
+      top: 60px;
+      z-index: 3;
+    }
+
+    .hero .bed {
+      position: absolute;
+      width: 285px;
+      right: 15px;
+      top: 75px;
+      z-index: 2;
+    }
+
+    .hero-text {
+      position: absolute;
+      right: 35px;
+      top: 55px;
+      text-align: center;
+      z-index: 4;
+      color: #000000;
+    }
+
+    .hero-text .small {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .hero-text .bold {
+      font-size: 21px;
+      font-weight: 700;
+    }
+
+    .main-card {
+      text-align: center;
+      padding: 0 25px;
+      margin-top: -15px;
+    }
+
+    .success-icon {
+      display: none;
+      width: 66px;
+      height: 66px;
+      margin: 0 auto 20px;
+      border-radius: 12px;
+      background: #3cc46d;
+      color: #ffffff;
+      font-size: 42px;
+      line-height: 66px;
+      font-weight: bold;
+      box-shadow: 0 8px 0 rgba(255, 198, 70, 0.35);
+    }
+
+    .title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 24px;
+      color: #0073c7;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-family: Georgia, 'Times New Roman', serif;
+      color: #5d75a0;
+      font-size: 18px;
+      margin-bottom: 18px;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      color: #5d75a0;
+      font-size: 20px;
+      margin-bottom: 18px;
+    }
+
+    .inoac-logo-box {
+      border: 5px solid #1689c4;
+      border-radius: 7px;
+      padding: 10px 13px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+    }
+
+    .inoac-logo-box img {
+      width: 70px;
+      display: block;
+    }
+
+    .producer-text {
+      color: #5d75a0;
+      font-size: 20px;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+
+    .company-name {
+      color: #5d75a0;
+      font-size: 21px;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 26px;
+    }
+
+    .warranty-box {
+      background: linear-gradient(90deg, #1476b9, #31b4dc);
+      color: #ffffff;
+      border-radius: 5px;
+      padding: 18px 20px 22px;
+      margin: 0 25px 34px;
+      text-align: center;
+    }
+
+    .warranty-title {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .date-row {
+      display: flex;
+      justify-content: center;
+      gap: 34px;
+    }
+
+    .date-item {
+      background: #ffffff;
+      color: #1469a6;
+      min-width: 80px;
+      height: 56px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 27px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .form-section {
+      padding: 0 25px;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      color: #61718b;
+      font-size: 15px;
+      margin-bottom: 7px;
+    }
+
+    .required {
+      color: #f04545;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      height: 46px;
+      border: 1px solid #111111;
+      border-radius: 5px;
+      padding: 0 13px;
+      font-size: 16px;
+      background: #ffffff;
+      color: #000000;
+    }
+
+    .field input[disabled] {
+      border: none;
+      background: #eeeeee;
+      color: #1f2f46;
+    }
+
+    .submit-wrap {
+      margin-top: 34px;
+      background: linear-gradient(90deg, #1476b9, #31b4dc);
+      height: 74px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .submit-inner {
+      background: #ffffff;
+      border-radius: 0 0 999px 999px;
+      padding: 0 14px 14px;
+      transform: translateY(-1px);
+    }
+
+    .submit {
+      width: 150px;
+      height: 46px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #1476b9, #31b4dc);
+      color: #ffffff;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+    }
+
+    .submit:hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 420px) {
+      .hero {
+        height: 350px;
+      }
+
+      .hero .ball {
+        width: 250px;
+        left: 25px;
+      }
+
+      .hero .bed {
+        width: 245px;
+        right: 5px;
+      }
+
+      .hero-text {
+        right: 22px;
+      }
+
+      .date-row {
+        gap: 20px;
+      }
+
+      .date-item {
+        min-width: 70px;
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
 <body>
-  <div class="i-phone-13-14-5">
-    <div class="frame-38828">
-      <div class="frame-38826">
-        <div class="_345016715-0-a-3-d-21-fb-16-de-4066-862-f-ded-9-aca-88986-1">
-          <img class="group" src="Document_files/group0.svg">
-        </div>
-        <img class="download" src="Document_files/download0.png">
-        <img class="download-1" src="Document_files/download-10.png">
-        <div class="frame-38807">
-          <div class="kuat-tahan-lama">Kuat, Tahan Lama</div>
-          <div class="dan-bergaransi">dan Bergaransi</div>
-        </div>
-        <img class="whats-app-image-2025-02-04-at-14-46-29-5-df-5389-d-1" src="Document_files/whats-app-image-2025-02-04-at-14-46-29-5-df-5389-d-10.png">
-      </div>
-      <div class="frame-38827">
-        <div class="frame-38817">
-          <div class="frame-38813">
-			<br>
-            <div class="selamat">SELAMAT</div>
-            <div class="anda-telah-membeli-produk-asli-dengan">
-				Anda telah membeli produk asli<br class="mobile-break">
-			</div>
-          </div>
-            <div class="frame-38815">
-              <div class="dari"> &nbsp; dari INOAC </div>
-              <div class="frame-38811">`		
-                <div class="frame-38812">
-                  <img class="whats-app-image-2025-02-04-at-14-46-29-5-df-5389-d-2" src="Document_files/logo-inoac-df.png">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="diproduksi-dan-distribusi-oleh">
-            diproduksi oleh INOAC .
-          </div>
-		        <div class="frame-38819">
-          <div class="garansi-produk-ini-adalah">Garansi Produk Ini Adalah</div>
-          <div class="frame-38820">
-            <div class="frame-388092">
-              <div class="_10">16</div>
-            </div>
-            <div class="frame-38810">
-              <div class="_12">05</div>
-            </div>
-            <div class="frame-388112">
-              <div class="_25">2026</div>
-            </div>
-          </div>
-        </div>
-      </div>
-	  
-		<form action="#" method="post">
-		
-		  <input type="hidden" id="serialCode" name="serialCode" value="1KCRXT">
-          <input type="hidden" id="keyRegistrationCode" name="keyRegistrationCode" value="1KPI7L">
-          <input type="hidden" id="registrationCode" name="registrationCode" value="">
-          <input type="hidden" id="productCode" name="productCode" value="BSA-0065-000270">
-          <input type="hidden" id="productName" name="productName" value="INOAC D-20 EOQ BLACK">
-		  <input type="hidden" id="warrantyDate" name="warrantyDate" value="2026-05-16">
-		  
-		  <div class="frame-357">
-			<div class="frame-38822">
-				<br>
-			  <div class="frame-363">
-				<div class="serial-number">
-				  <span>
-					<span class="serial-number-span">Serial Number</span>
-					<span class="serial-number-span2">*</span>
-				  </span>
-				</div>
-				<input type="text" class="frame-356" id="disabled_serialCode" name="disabled_serialCode" placeholder="" value="1KCRXT" disabled="disabled">
-			  </div>
-			  <div class="frame-364">
-				<div class="nama-barang">
-				  <span>
-					<span class="nama-barang-span">Product ID</span>
-					<span class="nama-barang-span2">*</span>
-				  </span>
-				</div>
-				<input type="text" class="frame-356" id="disabled_productCode" name="disabled_productCode" placeholder="" value="BSA-0065-000270" disabled="disabled">
-			  </div>
-				<input type="text" class="frame-356" id="disabled_productName" name="disabled_productName" placeholder="" value="INOAC D-20 EOQ BLACK" disabled="disabled">
-			  </div>
-				<input type="text" class="frame-356" id="disabled_density" name="disabled_density" placeholder="" value="D-20" disabled="disabled">
-			  </div>
-			  <div class="frame-366">
-				<div class="garansi">
-				  <span>
-					<span class="garansi-span">Garansi (Tahun)</span>
-					<span class="garansi-span2">*</span>
-				  </span>
-				</div>
-				<input type="text" class="frame-356" id="disabled_warranty" name="disabled_warranty" placeholder="" value="8" disabled="disabled">
-			  </div>
-			</div>
-			
-			<div class="frame-38821">
-			  <div class="frame-3562">
-				<div class="nama">
-				  <span>
-					<span class="nama-span">Nama Lengkap</span>
-					<span class="nama-span2">*</span>
-				  </span>
-				</div>
-				<input type="text" class="frame-3563" id="customerName" name="customerName" placeholder="" maxlength="50" style="text-transform:uppercase" required="">
-			  </div>
-			  <div class="frame-3562">
-				<div class="nama">
-				  <span>
-					<span class="nama-span">Jenis Kelamin</span>
-					<span class="nama-span2">*</span>
-				  </span>
-				</div>
-				<select id="gender" name="gender" class="frame-3563">
-												<option value="default" disabled="disabled">Pilih Jenis Kelamin</option>
-							<option value="Laki-laki" selected="selected">Laki-laki</option>
-							<option value="Perempuan">Perempuan</option>
-									</select>
-			  </div>
-			  <div class="frame-3572">
-				<div class="tempat-lahir">
-				  <span>
-					<span class="tempat-lahir-span">Tempat Lahir</span>
-					<span class="tempat-lahir-span2">*</span>
-				  </span>
-				</div>
-				<input type="text" class="frame-3563" id="placeOfBirth" name="placeOfBirth" maxlength="50" placeholder="" style="text-transform:uppercase" required="">
-			  </div>
-			  <div class="frame-368">
-				<div class="tanggal-lahir">
-				  <span>
-					<span class="tanggal-lahir-span">Tanggal Lahir</span>
-					<span class="tanggal-lahir-span2">*</span>
-				  </span>
-				</div>
+  <div class="page">
 
-				<div class="frame-3563">
-				 	<input type="date" style="width: 330px; height: 23px;" id="dateOfBirth" name="dateOfBirth" placeholder="" value="2026-05-16" required="" max="2026-05-16">
-				</div>
-				
-			  </div>
-			  <div class="frame-369">
-				<div class="nomor-telepon">
-				  <span>
-					<span class="nomor-telepon-span">Nomor Telepon</span>
-					<span class="nomor-telepon-span2">*</span>
-				  </span>
-				</div>
-				<input type="number" class="frame-3563" id="telephone" name="telephone" maxlength="15" placeholder="" style="text-transform:uppercase" required="">
-			  </div>
-			  <div class="frame-359">
-				<div class="email">
-				  <span>
-					<span class="email-span">Email</span>
-					<span class="email-span2">*</span>
-				  </span>
-				</div>
-				<input type="email" class="frame-3563" id="email" name="email" maxlength="50" placeholder="" style="text-transform:lowercase" required="">
-			  </div>
-			  <div class="frame-359">
-				<div class="email">
-				  <span>
-					<span class="email-span">Alamat</span>
-					<span class="email-span2"></span>
-				  </span>
-				</div>
-				<input type="text" class="frame-3563" id="address" name="address" maxlength="100" placeholder="" style="text-transform:lowercase">
-			  </div>
-			</div>
-		  </div>
-		
-		  <div class="frame-38824">
-		  <br>
-			<div class="frame-38825">
-			  <div class="frame-38823">
-				<button type="button" id="submitBtn" class="submit">SUBMIT</button>
-			  </div>
-			</div>
-		  </div>
-		</form>
-    </div>
+    <section class="hero">
+      <img class="ball" src="Document_files/group0.svg" alt="Warranty Visual" />
+      <img class="bed" src="Document_files/whats-app-image-2025-02-04-at-14-46-29-5-df-5389-d-10.png" alt="Kasur INOAC" />
+
+      <div class="hero-text">
+        <div class="small">Kuat, Tahan Lama</div>
+        <div class="bold">dan Bergaransi</div>
+      </div>
+    </section>
+
+    <section class="main-card">
+      <div id="successIcon" class="success-icon">✓</div>
+
+      <div id="titleText" class="title">SELAMAT</div>
+
+      <div id="subtitleText" class="subtitle">
+        Anda telah membeli produk asli
+      </div>
+
+      <div class="brand-row">
+        <span>dari INOAC</span>
+        <span class="inoac-logo-box">
+          <img src="Document_files/logo-inoac-df.png" alt="Logo INOAC" />
+        </span>
+      </div>
+
+      <div class="producer-text">
+        diproduksi oleh INOAC dan distribusi oleh
+      </div>
+
+      <div class="company-name">
+        PT. INOAC POLYTECHNO INDONESIA
+      </div>
+    </section>
+
+    <section class="warranty-box">
+      <div id="warrantyTitle" class="warranty-title">
+        Garansi Produk Ini Adalah
+      </div>
+
+      <div class="date-row">
+        <div class="date-item">16</div>
+        <div class="date-item">05</div>
+        <div id="warrantyYear" class="date-item">2026</div>
+      </div>
+    </section>
+
+    <form id="warrantyForm" class="form-section">
+      <input type="hidden" id="serialCode" name="serialCode" value="1KCRXT" />
+      <input type="hidden" id="keyRegistrationCode" name="keyRegistrationCode" value="1KPI7L" />
+      <input type="hidden" id="registrationCode" name="registrationCode" value="" />
+      <input type="hidden" id="productCode" name="productCode" value="BSA-0065-000270" />
+      <input type="hidden" id="productName" name="productName" value="INOAC D-20 EOQ BLACK" />
+      <input type="hidden" id="warrantyDate" name="warrantyDate" value="2026-05-16" />
+
+      <div class="field">
+        <label>Serial Number <span class="required">*</span></label>
+        <input type="text" value="1KCRXT" disabled />
+      </div>
+
+      <div class="field">
+        <label>Product ID <span class="required">*</span></label>
+        <input type="text" value="BSA-0065-000270" disabled />
+      </div>
+
+      <div class="field">
+        <label>Garansi (Tahun) <span class="required">*</span></label>
+        <input type="text" value="8" disabled />
+      </div>
+
+      <div class="field">
+        <label>Nama Lengkap <span class="required">*</span></label>
+        <input type="text" id="customerName" name="customerName" maxlength="50" required />
+      </div>
+
+      <div class="field">
+        <label>Jenis Kelamin <span class="required">*</span></label>
+        <select id="gender" name="gender" required>
+          <option value="Laki-laki" selected>Laki-laki</option>
+          <option value="Perempuan">Perempuan</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Tempat Lahir <span class="required">*</span></label>
+        <input type="text" id="placeOfBirth" name="placeOfBirth" maxlength="50" required />
+      </div>
+
+      <div class="field">
+        <label>Tanggal Lahir <span class="required">*</span></label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth" required />
+      </div>
+
+      <div class="field">
+        <label>Nomor Telepon <span class="required">*</span></label>
+        <input type="number" id="telephone" name="telephone" maxlength="15" required />
+      </div>
+
+      <div class="field">
+        <label>Email <span class="required">*</span></label>
+        <input type="email" id="email" name="email" maxlength="50" required />
+      </div>
+
+      <div class="field">
+        <label>Alamat</label>
+        <input type="text" id="address" name="address" maxlength="100" />
+      </div>
+
+      <div class="submit-wrap">
+        <div class="submit-inner">
+          <button type="button" id="submitBtn" class="submit">SUBMIT</button>
+        </div>
+      </div>
+    </form>
   </div>
-<script>
-(function () {
-  const dateInput = document.getElementById("dateOfBirth");
 
-  if (dateInput) {
-    const today = new Date();
-    const formattedToday = today.toISOString().split("T")[0];
+  <script>
+    (function () {
+      const dateInput = document.getElementById("dateOfBirth");
 
-    dateInput.value = formattedToday;
-    dateInput.max = formattedToday;
-  }
-
-  const submitBtn = document.getElementById("submitBtn");
-
-  if (submitBtn) {
-    submitBtn.addEventListener("click", function () {
-      const selamatText = document.querySelector(".selamat");
-      const subtitleText = document.querySelector(".anda-telah-membeli-produk-asli-dengan");
-      const garansiTitle = document.querySelector(".garansi-produk-ini-adalah");
-      const warrantyYear = document.querySelector("._25");
-
-      if (selamatText) {
-        selamatText.innerText = "SELAMAT";
+      if (dateInput) {
+        const today = new Date();
+        const formattedToday = today.toISOString().split("T")[0];
+        dateInput.value = formattedToday;
+        dateInput.max = formattedToday;
       }
 
-      if (subtitleText) {
-        subtitleText.innerHTML =
+      const submitBtn = document.getElementById("submitBtn");
+
+      submitBtn.addEventListener("click", function () {
+        const form = document.getElementById("warrantyForm");
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        document.getElementById("successIcon").style.display = "block";
+        document.getElementById("titleText").innerText = "SELAMAT";
+        document.getElementById("subtitleText").innerHTML =
           '<strong style="font-size:24px;color:#000;">Anda Berhasil Registrasi</strong>';
-      }
+        document.getElementById("warrantyTitle").innerText =
+          "Masa Berlaku Garansi Produk";
+        document.getElementById("warrantyYear").innerText = "2034";
 
-      if (garansiTitle) {
-        garansiTitle.innerText = "Masa Berlaku Garansi Produk";
-      }
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
 
-      if (warrantyYear) {
-        warrantyYear.innerText = "2034";
-      }
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+        setTimeout(function () {
+          alert("Selamat, Anda Berhasil Registrasi");
+        }, 350);
       });
-
-      setTimeout(function () {
-        alert("Selamat, Anda Berhasil Registrasi");
-      }, 300);
-    });
-  }
-})();
-</script>
+    })();
+  </script>
 </body>
 </html>
