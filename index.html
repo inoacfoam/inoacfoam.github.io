@@ -221,24 +221,54 @@
     </div>
   </div>
 <script>
-document.getElementById("submitBtn").addEventListener("click", function () {
+(function () {
+  const dateInput = document.getElementById("dateOfBirth");
 
-  alert("Selamat, Anda Berhasil Registrasi");
+  if (dateInput) {
+    const today = new Date();
+    const formattedToday = today.toISOString().split("T")[0];
 
-  document.querySelector(".selamat").innerText = "SELAMAT";
+    dateInput.value = formattedToday;
+    dateInput.max = formattedToday;
+  }
 
-  document.querySelector(".anda-telah-membeli-produk-asli-dengan").innerHTML =
-    '<strong style="font-size:24px;color:#000;">Anda Berhasil Registrasi</strong>';
+  const submitBtn = document.getElementById("submitBtn");
 
-  document.querySelector(".garansi-produk-ini-adalah").innerText =
-    "Masa Berlaku Garansi Produk";
+  if (submitBtn) {
+    submitBtn.addEventListener("click", function () {
+      const selamatText = document.querySelector(".selamat");
+      const subtitleText = document.querySelector(".anda-telah-membeli-produk-asli-dengan");
+      const garansiTitle = document.querySelector(".garansi-produk-ini-adalah");
+      const warrantyYear = document.querySelector("._25");
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+      if (selamatText) {
+        selamatText.innerText = "SELAMAT";
+      }
 
-});
+      if (subtitleText) {
+        subtitleText.innerHTML =
+          '<strong style="font-size:24px;color:#000;">Anda Berhasil Registrasi</strong>';
+      }
+
+      if (garansiTitle) {
+        garansiTitle.innerText = "Masa Berlaku Garansi Produk";
+      }
+
+      if (warrantyYear) {
+        warrantyYear.innerText = "2034";
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+      setTimeout(function () {
+        alert("Selamat, Anda Berhasil Registrasi");
+      }, 300);
+    });
+  }
+})();
 </script>
 </body>
 </html>
