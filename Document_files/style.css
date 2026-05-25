@@ -936,3 +936,115 @@
   font-weight: 400;
   position: relative;
 }
+/* ============================= */
+/* FIX LAYOUT WARRANTY PAGE */
+/* ============================= */
+
+html,
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #ffffff !important;
+  overflow-x: hidden !important;
+}
+
+/* Batasi tampilan agar tetap seperti mobile */
+.i-phone-13-14-5 {
+  width: 490px !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  background: #ffffff !important;
+  overflow-x: hidden !important;
+}
+
+/* Rapikan area form agar tidak melebar ke kanan */
+.frame-357 {
+  display: block !important;
+  width: 100% !important;
+  max-width: 490px !important;
+  margin-top: 25px !important;
+  padding: 0 25px !important;
+  box-sizing: border-box !important;
+}
+
+/* Area data produk dan data customer dibuat turun normal */
+.frame-38822,
+.frame-38821 {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+}
+
+/* Setiap baris input dibuat rapi */
+.frame-363,
+.frame-364,
+.frame-365,
+.frame-366,
+.frame-3562,
+.frame-3572,
+.frame-368,
+.frame-369,
+.frame-359 {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 0 14px 0 !important;
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+}
+
+/* Input form full rapi */
+.frame-356,
+.frame-3563 {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 46px !important;
+  padding: 0 14px !important;
+  box-sizing: border-box !important;
+  border-radius: 6px !important;
+}
+
+/* Sembunyikan Nama Barang */
+.frame-364:has(#disabled_productName) {
+  display: none !important;
+}
+
+/* Sembunyikan Density */
+.frame-365 {
+  display: none !important;
+}
+
+/* Tombol submit tetap rapi */
+.frame-38824,
+.frame-38825,
+.frame-38823 {
+  width: 100% !important;
+  max-width: 490px !important;
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  text-align: center !important;
+}
+
+.submit {
+  cursor: pointer !important;
+}
+
+/* Jarak bawah kartu garansi ke serial number */
+.frame-38819 {
+  margin-bottom: 20px !important;
+}
