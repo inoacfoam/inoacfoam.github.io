@@ -134,16 +134,24 @@
   top: 286px;
 }
 .frame-38817 {
-  gap: 12px !important;
-  margin-bottom: 10px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  gap: 8px !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .frame-38827 {
-  gap: 12px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  gap: 8px !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .frame-357 {
-  margin-top: 0px !important;
+  margin-top: -120px !important;
+  padding-top: 0 !important;
 }
 .frame-38813,
 .frame-38816 {
