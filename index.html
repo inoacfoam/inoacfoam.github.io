@@ -73,6 +73,29 @@
       cursor: pointer;
     }
 
+
+
+    .submit-wrap.submitted-hidden {
+      display: none !important;
+    }
+
+    .submitted-note {
+      display: none;
+      margin: 22px 25px 0;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #ecfdf5;
+      color: #047857;
+      font-size: 15px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .submitted-note.show {
+      display: block;
+    }
+
     @keyframes modalPop {
       from {
         opacity: 0;
@@ -218,6 +241,11 @@
           <button type="button" id="submitBtn" class="submit">SUBMIT</button>
         </div>
       </div>
+
+      <div id="submittedNote" class="submitted-note">
+        Registrasi sudah berhasil. Tombol submit dinonaktifkan untuk mencegah data terkirim dua kali.
+      </div>
+
     </form>
   </div>
 
@@ -241,14 +269,18 @@
 
     const dateInput = document.getElementById("dateOfBirth");
     const submitBtn = document.getElementById("submitBtn");
+    const form = document.getElementById("warrantyForm");
+
+    const SERIAL_CHARS = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const SERIAL_START = "1KCRXT";
+    const SERIAL_LAST_USED_KEY = "inoacWarrantyLastSerial";
+    const SERIAL_DRAFT_KEY = "inoacWarrantyDraftSerial";
+    const SERIAL_SUBMITTED_KEY = "inoacWarrantySubmittedSerial";
+    const WARRANTY_SUBMITTED_DATE_KEY = "inoacWarrantySubmittedWarrantyDate";
 
     function pad2(value) {
       return String(value).padStart(2, "0");
     }
-
-    const SERIAL_CHARS = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const SERIAL_START = "1KCRXT";
-    const SERIAL_STORAGE_KEY = "inoacWarrantyLastSerial";
 
     function normalizeSerial(serial) {
       return String(serial || "")
@@ -257,12 +289,18 @@
         .slice(0, 6);
     }
 
-    function incrementSerial(serial) {
-      let chars = normalizeSerial(serial).split("");
+    function isValidSerial(serial) {
+      return /^[1-9A-Z]{6}$/.test(normalizeSerial(serial));
+    }
 
-      if (chars.length !== 6) {
+    function incrementSerial(serial) {
+      const current = normalizeSerial(serial);
+
+      if (!isValidSerial(current)) {
         return SERIAL_START;
       }
+
+      const chars = current.split("");
 
       for (let i = chars.length - 1; i >= 0; i--) {
         const currentIndex = SERIAL_CHARS.indexOf(chars[i]);
@@ -280,52 +318,72 @@
         chars[i] = SERIAL_CHARS[0];
       }
 
-      return SERIAL_CHARS[0] + chars.join("");
+      return SERIAL_START;
     }
 
-    function getLastUsedSerial() {
+    function storageGet(key) {
       try {
-        return localStorage.getItem(SERIAL_STORAGE_KEY) || "";
+        return localStorage.getItem(key) || "";
       } catch (error) {
         return "";
       }
     }
 
-    function saveLastUsedSerial(serial) {
+    function storageSet(key, value) {
       try {
-        localStorage.setItem(SERIAL_STORAGE_KEY, serial);
+        localStorage.setItem(key, value);
       } catch (error) {
-        // Kalau browser menolak localStorage, serial tetap tampil di form.
+        // Jika browser menolak localStorage, form tetap berjalan.
       }
     }
 
-    function getNextSerialNumber() {
-      const lastUsedSerial = normalizeSerial(getLastUsedSerial());
-      return lastUsedSerial ? incrementSerial(lastUsedSerial) : SERIAL_START;
+    function storageRemove(key) {
+      try {
+        localStorage.removeItem(key);
+      } catch (error) {
+        // Abaikan.
+      }
+    }
+
+    function getSubmittedSerial() {
+      const submitted = normalizeSerial(storageGet(SERIAL_SUBMITTED_KEY));
+      return isValidSerial(submitted) ? submitted : "";
+    }
+
+    function getLastUsedSerial() {
+      const lastUsed = normalizeSerial(storageGet(SERIAL_LAST_USED_KEY));
+      return isValidSerial(lastUsed) ? lastUsed : "";
+    }
+
+    function createOrGetDraftSerial() {
+      const submittedSerial = getSubmittedSerial();
+      if (submittedSerial) {
+        return submittedSerial;
+      }
+
+      const draftSerial = normalizeSerial(storageGet(SERIAL_DRAFT_KEY));
+      if (isValidSerial(draftSerial)) {
+        return draftSerial;
+      }
+
+      const lastUsedSerial = getLastUsedSerial();
+      const nextSerial = lastUsedSerial ? incrementSerial(lastUsedSerial) : SERIAL_START;
+      storageSet(SERIAL_DRAFT_KEY, nextSerial);
+      return nextSerial;
     }
 
     function setSerialValue(serial) {
+      const cleanSerial = normalizeSerial(serial);
       const serialHidden = document.getElementById("serialCode");
       const serialDisplay = document.getElementById("serialNumber");
 
       if (serialHidden) {
-        serialHidden.value = serial;
+        serialHidden.value = cleanSerial;
       }
 
       if (serialDisplay) {
-        serialDisplay.value = serial;
+        serialDisplay.value = cleanSerial;
       }
-    }
-
-    function previewSerialNumber() {
-      setSerialValue(getNextSerialNumber());
-    }
-
-    function commitSerialNumber() {
-      const newSerial = getNextSerialNumber();
-      setSerialValue(newSerial);
-      saveLastUsedSerial(newSerial);
-      return newSerial;
     }
 
     function addYears(date, years) {
@@ -344,6 +402,19 @@
       );
     }
 
+    function parseInputDate(value) {
+      if (!value) return null;
+      const parts = String(value).split("-");
+      if (parts.length !== 3) return null;
+
+      const year = Number(parts[0]);
+      const month = Number(parts[1]) - 1;
+      const day = Number(parts[2]);
+      const date = new Date(year, month, day);
+
+      return isNaN(date.getTime()) ? null : date;
+    }
+
     function setWarrantyDisplay(date) {
       document.getElementById("warrantyDay").innerText = pad2(date.getDate());
       document.getElementById("warrantyMonth").innerText = pad2(date.getMonth() + 1);
@@ -360,42 +431,105 @@
       }
     }
 
-    function refreshWarrantyPreview() {
-      const today = new Date();
-      const warrantyEndDate = addYears(today, WARRANTY_YEARS);
-      setWarrantyDisplay(warrantyEndDate);
-    }
-
-    if (dateInput) {
-      const today = new Date();
-      const formattedToday = formatDateForInput(today);
-      dateInput.value = formattedToday;
-      dateInput.max = formattedToday;
-    }
-
-    previewSerialNumber();
-    refreshWarrantyPreview();
-
-    submitBtn.addEventListener("click", function () {
-      const form = document.getElementById("warrantyForm");
-
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-
-      commitSerialNumber();
-
-      const submitDate = new Date();
-      const warrantyEndDate = addYears(submitDate, WARRANTY_YEARS);
-      setWarrantyDisplay(warrantyEndDate);
-
+    function setSuccessHeader() {
       document.getElementById("successIcon").style.display = "block";
       document.getElementById("titleText").innerText = "SELAMAT";
       document.getElementById("subtitleText").innerHTML =
         '<strong style="font-size:24px;color:#000;">Anda Berhasil Registrasi</strong>';
       document.getElementById("warrantyTitle").innerText =
         "Masa Berlaku Garansi Produk";
+    }
+
+    function hideSubmitButton() {
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "SUDAH TERDAFTAR";
+      }
+
+      const submitWrap = submitBtn ? submitBtn.closest(".submit-wrap") : null;
+      if (submitWrap) {
+        submitWrap.classList.add("submitted-hidden");
+      }
+
+      const note = document.getElementById("submittedNote");
+      if (note) {
+        note.classList.add("show");
+      }
+    }
+
+    function lockFormInputs() {
+      if (!form) return;
+
+      const elements = form.querySelectorAll("input, select, textarea");
+      elements.forEach(function (element) {
+        if (element.id === "serialNumber" || element.type === "hidden") return;
+        element.disabled = true;
+      });
+    }
+
+    function lockSubmittedState() {
+      setSuccessHeader();
+      hideSubmitButton();
+      lockFormInputs();
+    }
+
+    function refreshWarrantyPreview() {
+      const savedWarrantyDate = parseInputDate(storageGet(WARRANTY_SUBMITTED_DATE_KEY));
+
+      if (getSubmittedSerial() && savedWarrantyDate) {
+        setWarrantyDisplay(savedWarrantyDate);
+        return;
+      }
+
+      const today = new Date();
+      const warrantyEndDate = addYears(today, WARRANTY_YEARS);
+      setWarrantyDisplay(warrantyEndDate);
+    }
+
+    function initializePage() {
+      if (dateInput) {
+        const today = new Date();
+        const formattedToday = formatDateForInput(today);
+        dateInput.value = formattedToday;
+        dateInput.max = formattedToday;
+      }
+
+      const serial = createOrGetDraftSerial();
+      setSerialValue(serial);
+      refreshWarrantyPreview();
+
+      if (getSubmittedSerial()) {
+        lockSubmittedState();
+      }
+    }
+
+    initializePage();
+
+    submitBtn.addEventListener("click", function () {
+      if (getSubmittedSerial()) {
+        lockSubmittedState();
+        showSuccessModal();
+        return;
+      }
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const finalSerial = createOrGetDraftSerial();
+      setSerialValue(finalSerial);
+      storageSet(SERIAL_LAST_USED_KEY, finalSerial);
+      storageSet(SERIAL_SUBMITTED_KEY, finalSerial);
+      storageRemove(SERIAL_DRAFT_KEY);
+
+      const submitDate = new Date();
+      const warrantyEndDate = addYears(submitDate, WARRANTY_YEARS);
+      const formattedWarrantyDate = formatDateForInput(warrantyEndDate);
+      storageSet(WARRANTY_SUBMITTED_DATE_KEY, formattedWarrantyDate);
+      setWarrantyDisplay(warrantyEndDate);
+
+      lockSubmittedState();
 
       window.scrollTo({
         top: 0,
