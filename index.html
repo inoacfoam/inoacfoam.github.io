@@ -107,6 +107,52 @@
         transform: translateY(0) scale(1);
       }
     }
+
+
+    /* Update request: logo utama INOAC + pesan validasi data */
+    .hero .ball {
+      display: none !important;
+    }
+
+    .hero .bed {
+      width: 260px !important;
+      height: auto !important;
+      left: 50% !important;
+      right: auto !important;
+      top: 95px !important;
+      transform: translateX(-50%);
+      object-fit: contain;
+      z-index: 3;
+    }
+
+    .hero-text {
+      left: 50% !important;
+      right: auto !important;
+      top: 42px !important;
+      transform: translateX(-50%);
+      width: 100%;
+      text-align: center;
+    }
+
+    .valid-data-warning {
+      margin: 0 0 14px;
+      color: #d00000;
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 420px) {
+      .hero .bed {
+        width: 230px !important;
+        top: 92px !important;
+      }
+
+      .hero-text {
+        top: 44px !important;
+      }
+    }
+
   </style>
 
 </head>
@@ -123,8 +169,8 @@
 
       <img
         class="bed"
-        src="Document_files/whats-app-image-2025-02-04-at-14-46-29-5-df-5389-d-10.png"
-        alt="Kasur INOAC"
+        src="Document_files/logo-inoac-df.png"
+        alt="Logo INOAC"
         onerror="this.style.display='none';"
       />
 
@@ -184,6 +230,10 @@
       <input type="hidden" id="warrantyDate" name="warrantyDate" value="" />
       <input type="hidden" id="submittedAt" name="submittedAt" value="" />
       <input type="hidden" id="source" name="source" value="github.io" />
+
+      <div class="valid-data-warning">
+        *Pastikan mengisi Data Valid
+      </div>
 
       <div class="field">
         <label for="serialNumber">Serial Number <span class="required">*</span></label>
