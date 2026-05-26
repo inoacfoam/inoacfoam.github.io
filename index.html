@@ -246,59 +246,86 @@
       return String(value).padStart(2, "0");
     }
 
-    function getRandomPart(length) {
-      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-      let result = "";
+    const SERIAL_CHARS = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const SERIAL_START = "1KCRXT";
+    const SERIAL_STORAGE_KEY = "inoacWarrantyLastSerial";
 
-      if (window.crypto && window.crypto.getRandomValues) {
-        const values = new Uint32Array(length);
-        window.crypto.getRandomValues(values);
+    function normalizeSerial(serial) {
+      return String(serial || "")
+        .toUpperCase()
+        .replace(/[^1-9A-Z]/g, "")
+        .slice(0, 6);
+    }
 
-        for (let i = 0; i < length; i++) {
-          result += chars[values[i] % chars.length];
+    function incrementSerial(serial) {
+      let chars = normalizeSerial(serial).split("");
+
+      if (chars.length !== 6) {
+        return SERIAL_START;
+      }
+
+      for (let i = chars.length - 1; i >= 0; i--) {
+        const currentIndex = SERIAL_CHARS.indexOf(chars[i]);
+
+        if (currentIndex === -1) {
+          chars[i] = SERIAL_CHARS[0];
+          return chars.join("");
         }
 
-        return result;
+        if (currentIndex < SERIAL_CHARS.length - 1) {
+          chars[i] = SERIAL_CHARS[currentIndex + 1];
+          return chars.join("");
+        }
+
+        chars[i] = SERIAL_CHARS[0];
       }
 
-      for (let i = 0; i < length; i++) {
-        result += chars[Math.floor(Math.random() * chars.length)];
+      return SERIAL_CHARS[0] + chars.join("");
+    }
+
+    function getLastUsedSerial() {
+      try {
+        return localStorage.getItem(SERIAL_STORAGE_KEY) || "";
+      } catch (error) {
+        return "";
       }
-
-      return result;
     }
 
-    function generateSerialNumber() {
-      const now = new Date();
-
-      const datePart =
-        pad2(now.getDate()) +
-        pad2(now.getMonth() + 1) +
-        String(now.getFullYear()).slice(-2);
-
-      const timePart =
-        pad2(now.getHours()) +
-        pad2(now.getMinutes()) +
-        pad2(now.getSeconds());
-
-      const randomPart = getRandomPart(4);
-
-      return "VITA-" + datePart + "-" + timePart + "-" + randomPart;
+    function saveLastUsedSerial(serial) {
+      try {
+        localStorage.setItem(SERIAL_STORAGE_KEY, serial);
+      } catch (error) {
+        // Kalau browser menolak localStorage, serial tetap tampil di form.
+      }
     }
 
-    function setAutoSerialNumber() {
-      const newSerial = generateSerialNumber();
+    function getNextSerialNumber() {
+      const lastUsedSerial = normalizeSerial(getLastUsedSerial());
+      return lastUsedSerial ? incrementSerial(lastUsedSerial) : SERIAL_START;
+    }
 
+    function setSerialValue(serial) {
       const serialHidden = document.getElementById("serialCode");
       const serialDisplay = document.getElementById("serialNumber");
 
       if (serialHidden) {
-        serialHidden.value = newSerial;
+        serialHidden.value = serial;
       }
 
       if (serialDisplay) {
-        serialDisplay.value = newSerial;
+        serialDisplay.value = serial;
       }
+    }
+
+    function previewSerialNumber() {
+      setSerialValue(getNextSerialNumber());
+    }
+
+    function commitSerialNumber() {
+      const newSerial = getNextSerialNumber();
+      setSerialValue(newSerial);
+      saveLastUsedSerial(newSerial);
+      return newSerial;
     }
 
     function addYears(date, years) {
@@ -346,7 +373,7 @@
       dateInput.max = formattedToday;
     }
 
-    setAutoSerialNumber();
+    previewSerialNumber();
     refreshWarrantyPreview();
 
     submitBtn.addEventListener("click", function () {
@@ -357,7 +384,7 @@
         return;
       }
 
-      setAutoSerialNumber();
+      commitSerialNumber();
 
       const submitDate = new Date();
       const warrantyEndDate = addYears(submitDate, WARRANTY_YEARS);
