@@ -6,6 +6,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>INOAC Warranty</title>
   <link rel="stylesheet" href="Document_files/style.css" />
+
+  <style>
+    .custom-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 24px;
+    }
+
+    .custom-modal.show {
+      display: flex;
+    }
+
+    .custom-modal-box {
+      width: 100%;
+      max-width: 420px;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 32px 26px;
+      text-align: center;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25);
+      animation: modalPop 0.25s ease;
+    }
+
+    .modal-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1482c8, #2fc1df);
+      color: #ffffff;
+      font-size: 42px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .custom-modal-box h2 {
+      margin: 0 0 10px;
+      font-size: 26px;
+      color: #0f172a;
+    }
+
+    .custom-modal-box p {
+      margin: 0 0 24px;
+      font-size: 17px;
+      line-height: 1.5;
+      color: #5b6f91;
+    }
+
+    .custom-modal-box button {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 15px 24px;
+      background: linear-gradient(135deg, #1482c8, #2fc1df);
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    @keyframes modalPop {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+  </style>
+
 </head>
 
 <body>
@@ -73,26 +153,26 @@
     </section>
 
     <form id="warrantyForm" class="form-section">
-      <input type="hidden" id="serialCode" name="serialCode" value="1KCRXT" />
+      <input type="hidden" id="serialCode" name="serialCode" value="" />
       <input type="hidden" id="keyRegistrationCode" name="keyRegistrationCode" value="1KPI7L" />
       <input type="hidden" id="registrationCode" name="registrationCode" value="" />
       <input type="hidden" id="productCode" name="productCode" value="BSA-0065-000270" />
       <input type="hidden" id="productName" name="productName" value="INOAC D-20 EOQ BLACK" />
-      <input type="hidden" id="warrantyDate" name="warrantyDate" value="2026-05-16" />
+      <input type="hidden" id="warrantyDate" name="warrantyDate" value="" />
 
       <div class="field">
-        <label>Serial Number <span class="required">*</span></label>
-        <input type="text" value="1KCRXT" disabled />
+        <label for="serialNumber">Serial Number <span class="required">*</span></label>
+        <input type="text" id="serialNumber" value="" readonly />
       </div>
 
       <div class="field">
         <label>Product ID <span class="required">*</span></label>
-        <input type="text" value="BSA-0065-000270" disabled />
+        <input type="text" value="BSA-0065-000270" readonly />
       </div>
 
       <div class="field">
-        <label>Garansi (Tahun) <span class="required">*</span></label>
-        <input type="text" value="10" disabled />
+        <label for="warrantyYears">Garansi (Tahun) <span class="required">*</span></label>
+        <input type="text" id="warrantyYears" name="warrantyYears" value="10" readonly />
       </div>
 
       <div class="field">
@@ -142,27 +222,83 @@
   </div>
 
   <script>
-    function showSuccessModal() {
-  const modal = document.getElementById("successModal");
-  if (modal) {
-    modal.classList.add("show");
+  function showSuccessModal() {
+    const modal = document.getElementById("successModal");
+    if (modal) {
+      modal.classList.add("show");
+    }
   }
-}
 
-function closeSuccessModal() {
-  const modal = document.getElementById("successModal");
-  if (modal) {
-    modal.classList.remove("show");
+  function closeSuccessModal() {
+    const modal = document.getElementById("successModal");
+    if (modal) {
+      modal.classList.remove("show");
+    }
   }
-}
+
   (function () {
-    const WARRANTY_YEARS = 10 ;
+    const WARRANTY_YEARS = 10;
 
     const dateInput = document.getElementById("dateOfBirth");
     const submitBtn = document.getElementById("submitBtn");
 
     function pad2(value) {
       return String(value).padStart(2, "0");
+    }
+
+    function getRandomPart(length) {
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      let result = "";
+
+      if (window.crypto && window.crypto.getRandomValues) {
+        const values = new Uint32Array(length);
+        window.crypto.getRandomValues(values);
+
+        for (let i = 0; i < length; i++) {
+          result += chars[values[i] % chars.length];
+        }
+
+        return result;
+      }
+
+      for (let i = 0; i < length; i++) {
+        result += chars[Math.floor(Math.random() * chars.length)];
+      }
+
+      return result;
+    }
+
+    function generateSerialNumber() {
+      const now = new Date();
+
+      const datePart =
+        pad2(now.getDate()) +
+        pad2(now.getMonth() + 1) +
+        String(now.getFullYear()).slice(-2);
+
+      const timePart =
+        pad2(now.getHours()) +
+        pad2(now.getMinutes()) +
+        pad2(now.getSeconds());
+
+      const randomPart = getRandomPart(4);
+
+      return "VITA-" + datePart + "-" + timePart + "-" + randomPart;
+    }
+
+    function setAutoSerialNumber() {
+      const newSerial = generateSerialNumber();
+
+      const serialHidden = document.getElementById("serialCode");
+      const serialDisplay = document.getElementById("serialNumber");
+
+      if (serialHidden) {
+        serialHidden.value = newSerial;
+      }
+
+      if (serialDisplay) {
+        serialDisplay.value = newSerial;
+      }
     }
 
     function addYears(date, years) {
@@ -190,6 +326,11 @@ function closeSuccessModal() {
       if (warrantyDateInput) {
         warrantyDateInput.value = formatDateForInput(date);
       }
+
+      const warrantyYearsInput = document.getElementById("warrantyYears");
+      if (warrantyYearsInput) {
+        warrantyYearsInput.value = WARRANTY_YEARS;
+      }
     }
 
     function refreshWarrantyPreview() {
@@ -205,6 +346,7 @@ function closeSuccessModal() {
       dateInput.max = formattedToday;
     }
 
+    setAutoSerialNumber();
     refreshWarrantyPreview();
 
     submitBtn.addEventListener("click", function () {
@@ -214,6 +356,8 @@ function closeSuccessModal() {
         form.reportValidity();
         return;
       }
+
+      setAutoSerialNumber();
 
       const submitDate = new Date();
       const warrantyEndDate = addYears(submitDate, WARRANTY_YEARS);
@@ -230,12 +374,13 @@ function closeSuccessModal() {
         top: 0,
         behavior: "smooth"
       });
-showSuccessModal();
+
+      showSuccessModal();
     });
   })();
 </script>
-</body>
-  <div id="successModal" class="custom-modal">
+
+<div id="successModal" class="custom-modal">
   <div class="custom-modal-box">
     <div class="modal-icon">✓</div>
     <h2>Registrasi Berhasil</h2>
@@ -243,4 +388,5 @@ showSuccessModal();
     <button type="button" onclick="closeSuccessModal()">Oke</button>
   </div>
 </div>
+</body>
 </html>
