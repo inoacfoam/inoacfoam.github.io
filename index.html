@@ -5,15 +5,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>INOAC Warranty</title>
-<link rel="stylesheet" href="Document_files/style.css" />
+  <link rel="stylesheet" href="Document_files/style.css" />
 </head>
 
 <body>
-  <div class="page">
+  <div id="page" class="page">
+    <section class="hero" id="heroArea">
+      <img
+        class="ball"
+        src="Document_files/group0.svg"
+        alt="Warranty Visual"
+        onerror="this.style.display='none'; document.getElementById('heroArea').classList.add('no-ball');"
+      />
 
-    <section class="hero">
-      <img class="ball" src="Document_files/group0.svg" alt="Warranty Visual" />
-      <img class="bed" src="Document_files/whats-app-image-2025-02-04-at-14-46-29-5-df-5389-d-10.png" alt="Kasur INOAC" />
+      <img
+        class="bed"
+        src="Document_files/whats-app-image-2025-02-04-at-14-46-29-5-df-5389-d-10.png"
+        alt="Kasur INOAC"
+        onerror="this.style.display='none';"
+      />
 
       <div class="hero-text">
         <div class="small">Kuat, Tahan Lama</div>
@@ -33,7 +43,11 @@
       <div class="brand-row">
         <span>dari INOAC</span>
         <span class="inoac-logo-box">
-          <img src="Document_files/logo-inoac-df.png" alt="Logo INOAC" />
+          <img
+            src="Document_files/logo-inoac-df.png"
+            alt="Logo INOAC"
+            onerror="this.style.display='none';"
+          />
         </span>
       </div>
 
@@ -82,12 +96,12 @@
       </div>
 
       <div class="field">
-        <label>Nama Lengkap <span class="required">*</span></label>
+        <label for="customerName">Nama Lengkap <span class="required">*</span></label>
         <input type="text" id="customerName" name="customerName" maxlength="50" required />
       </div>
 
       <div class="field">
-        <label>Jenis Kelamin <span class="required">*</span></label>
+        <label for="gender">Jenis Kelamin <span class="required">*</span></label>
         <select id="gender" name="gender" required>
           <option value="Laki-laki" selected>Laki-laki</option>
           <option value="Perempuan">Perempuan</option>
@@ -95,27 +109,27 @@
       </div>
 
       <div class="field">
-        <label>Tempat Lahir <span class="required">*</span></label>
+        <label for="placeOfBirth">Tempat Lahir <span class="required">*</span></label>
         <input type="text" id="placeOfBirth" name="placeOfBirth" maxlength="50" required />
       </div>
 
       <div class="field">
-        <label>Tanggal Lahir <span class="required">*</span></label>
+        <label for="dateOfBirth">Tanggal Lahir <span class="required">*</span></label>
         <input type="date" id="dateOfBirth" name="dateOfBirth" required />
       </div>
 
       <div class="field">
-        <label>Nomor Telepon <span class="required">*</span></label>
-        <input type="number" id="telephone" name="telephone" maxlength="15" required />
+        <label for="telephone">Nomor Telepon <span class="required">*</span></label>
+        <input type="tel" id="telephone" name="telephone" maxlength="15" inputmode="numeric" required />
       </div>
 
       <div class="field">
-        <label>Email <span class="required">*</span></label>
+        <label for="email">Email <span class="required">*</span></label>
         <input type="email" id="email" name="email" maxlength="50" required />
       </div>
 
       <div class="field">
-        <label>Alamat</label>
+        <label for="address">Alamat</label>
         <input type="text" id="address" name="address" maxlength="100" />
       </div>
 
@@ -129,7 +143,9 @@
 
   <script>
     (function () {
+      const page = document.getElementById("page");
       const dateInput = document.getElementById("dateOfBirth");
+      const submitBtn = document.getElementById("submitBtn");
 
       if (dateInput) {
         const today = new Date();
@@ -138,8 +154,6 @@
         dateInput.max = formattedToday;
       }
 
-      const submitBtn = document.getElementById("submitBtn");
-
       submitBtn.addEventListener("click", function () {
         const form = document.getElementById("warrantyForm");
 
@@ -147,6 +161,8 @@
           form.reportValidity();
           return;
         }
+
+        page.classList.add("is-success");
 
         document.getElementById("successIcon").style.display = "block";
         document.getElementById("titleText").innerText = "SELAMAT";
