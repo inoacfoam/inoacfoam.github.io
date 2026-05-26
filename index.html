@@ -142,6 +142,19 @@
   </div>
 
   <script>
+    function showSuccessModal() {
+  const modal = document.getElementById("successModal");
+  if (modal) {
+    modal.classList.add("show");
+  }
+}
+
+function closeSuccessModal() {
+  const modal = document.getElementById("successModal");
+  if (modal) {
+    modal.classList.remove("show");
+  }
+}
   (function () {
     const WARRANTY_YEARS = 8;
 
