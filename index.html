@@ -175,22 +175,24 @@
 </div>
     </section>
 
-    <form id="warrantyForm" class="form-section">
+    <form id="warrantyForm" class="form-section" method="POST" action="https://script.google.com/macros/s/AKfycbw9wbv7VjvoWUfInm9fSJfRlb4ZIXg8P9zsWZvclYnJd-byQohnyY9vVVTidY5uaySh/exec" target="hiddenSubmitFrame">
       <input type="hidden" id="serialCode" name="serialCode" value="" />
       <input type="hidden" id="keyRegistrationCode" name="keyRegistrationCode" value="1KPI7L" />
       <input type="hidden" id="registrationCode" name="registrationCode" value="" />
-      <input type="hidden" id="productCode" name="productCode" value="BSA-0065-000270" />
+      <input type="hidden" id="productCode" name="productId" value="BSA-0065-000270" />
       <input type="hidden" id="productName" name="productName" value="INOAC D-20 EOQ BLACK" />
       <input type="hidden" id="warrantyDate" name="warrantyDate" value="" />
+      <input type="hidden" id="submittedAt" name="submittedAt" value="" />
+      <input type="hidden" id="source" name="source" value="github.io" />
 
       <div class="field">
         <label for="serialNumber">Serial Number <span class="required">*</span></label>
-        <input type="text" id="serialNumber" value="" readonly />
+        <input type="text" id="serialNumber" name="serialNumber" value="" readonly />
       </div>
 
       <div class="field">
         <label>Product ID <span class="required">*</span></label>
-        <input type="text" value="BSA-0065-000270" readonly />
+        <input type="text" id="productIdDisplay" value="BSA-0065-000270" readonly />
       </div>
 
       <div class="field">
@@ -200,7 +202,7 @@
 
       <div class="field">
         <label for="customerName">Nama Lengkap <span class="required">*</span></label>
-        <input type="text" id="customerName" name="customerName" maxlength="50" required />
+        <input type="text" id="customerName" name="fullName" maxlength="50" required />
       </div>
 
       <div class="field">
@@ -213,7 +215,7 @@
 
       <div class="field">
         <label for="placeOfBirth">Tempat Lahir <span class="required">*</span></label>
-        <input type="text" id="placeOfBirth" name="placeOfBirth" maxlength="50" required />
+        <input type="text" id="placeOfBirth" name="birthPlace" maxlength="50" required />
       </div>
 
       <div class="field">
@@ -223,7 +225,7 @@
 
       <div class="field">
         <label for="telephone">Nomor Telepon <span class="required">*</span></label>
-        <input type="tel" id="telephone" name="telephone" maxlength="15" inputmode="numeric" required />
+        <input type="tel" id="telephone" name="phone" maxlength="15" inputmode="numeric" required />
       </div>
 
       <div class="field">
@@ -266,6 +268,7 @@
 
   (function () {
     const WARRANTY_YEARS = 10;
+    const DATABASE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw9wbv7VjvoWUfInm9fSJfRlb4ZIXg8P9zsWZvclYnJd-byQohnyY9vVVTidY5uaySh/exec";
 
     const dateInput = document.getElementById("dateOfBirth");
     const submitBtn = document.getElementById("submitBtn");
@@ -384,6 +387,11 @@
       if (serialDisplay) {
         serialDisplay.value = cleanSerial;
       }
+
+      const registrationInput = document.getElementById("registrationCode");
+      if (registrationInput) {
+        registrationInput.value = cleanSerial;
+      }
     }
 
     function addYears(date, years) {
@@ -486,6 +494,20 @@
       setWarrantyDisplay(warrantyEndDate);
     }
 
+    function submitToDatabase() {
+      if (!form) return;
+
+      const submittedAtInput = document.getElementById("submittedAt");
+      if (submittedAtInput) {
+        submittedAtInput.value = new Date().toISOString();
+      }
+
+      form.action = DATABASE_WEB_APP_URL;
+      form.method = "POST";
+      form.target = "hiddenSubmitFrame";
+      form.submit();
+    }
+
     function initializePage() {
       if (dateInput) {
         const today = new Date();
@@ -529,6 +551,8 @@
       storageSet(WARRANTY_SUBMITTED_DATE_KEY, formattedWarrantyDate);
       setWarrantyDisplay(warrantyEndDate);
 
+      submitToDatabase();
+
       lockSubmittedState();
 
       window.scrollTo({
@@ -541,11 +565,17 @@
   })();
 </script>
 
+<iframe
+  name="hiddenSubmitFrame"
+  id="hiddenSubmitFrame"
+  style="display:none;"
+></iframe>
+
 <div id="successModal" class="custom-modal">
   <div class="custom-modal-box">
     <div class="modal-icon">✓</div>
     <h2>Registrasi Berhasil</h2>
-    <p>Selamat, data garansi produk Anda berhasil dikirim.</p>
+    <p>Selamat, data garansi produk Anda berhasil dikirim ke database.</p>
     <button type="button" onclick="closeSuccessModal()">Oke</button>
   </div>
 </div>
