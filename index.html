@@ -142,46 +142,87 @@
   </div>
 
   <script>
-    (function () {
-      const page = document.getElementById("page");
-      const dateInput = document.getElementById("dateOfBirth");
-      const submitBtn = document.getElementById("submitBtn");
+  (function () {
+    const WARRANTY_YEARS = 8;
 
-      if (dateInput) {
-        const today = new Date();
-        const formattedToday = today.toISOString().split("T")[0];
-        dateInput.value = formattedToday;
-        dateInput.max = formattedToday;
+    const dateInput = document.getElementById("dateOfBirth");
+    const submitBtn = document.getElementById("submitBtn");
+
+    function pad2(value) {
+      return String(value).padStart(2, "0");
+    }
+
+    function addYears(date, years) {
+      const result = new Date(date);
+      result.setFullYear(result.getFullYear() + years);
+      return result;
+    }
+
+    function formatDateForInput(date) {
+      return (
+        date.getFullYear() +
+        "-" +
+        pad2(date.getMonth() + 1) +
+        "-" +
+        pad2(date.getDate())
+      );
+    }
+
+    function setWarrantyDisplay(date) {
+      document.getElementById("warrantyDay").innerText = pad2(date.getDate());
+      document.getElementById("warrantyMonth").innerText = pad2(date.getMonth() + 1);
+      document.getElementById("warrantyYear").innerText = date.getFullYear();
+
+      const warrantyDateInput = document.getElementById("warrantyDate");
+      if (warrantyDateInput) {
+        warrantyDateInput.value = formatDateForInput(date);
+      }
+    }
+
+    function refreshWarrantyPreview() {
+      const today = new Date();
+      const warrantyEndDate = addYears(today, WARRANTY_YEARS);
+      setWarrantyDisplay(warrantyEndDate);
+    }
+
+    if (dateInput) {
+      const today = new Date();
+      const formattedToday = formatDateForInput(today);
+      dateInput.value = formattedToday;
+      dateInput.max = formattedToday;
+    }
+
+    refreshWarrantyPreview();
+
+    submitBtn.addEventListener("click", function () {
+      const form = document.getElementById("warrantyForm");
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
       }
 
-      submitBtn.addEventListener("click", function () {
-        const form = document.getElementById("warrantyForm");
+      const submitDate = new Date();
+      const warrantyEndDate = addYears(submitDate, WARRANTY_YEARS);
+      setWarrantyDisplay(warrantyEndDate);
 
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
+      document.getElementById("successIcon").style.display = "block";
+      document.getElementById("titleText").innerText = "SELAMAT";
+      document.getElementById("subtitleText").innerHTML =
+        '<strong style="font-size:24px;color:#000;">Anda Berhasil Registrasi</strong>';
+      document.getElementById("warrantyTitle").innerText =
+        "Masa Berlaku Garansi Produk";
 
-        page.classList.add("is-success");
-
-        document.getElementById("successIcon").style.display = "block";
-        document.getElementById("titleText").innerText = "SELAMAT";
-        document.getElementById("subtitleText").innerHTML =
-          '<strong style="font-size:24px;color:#000;">Anda Berhasil Registrasi</strong>';
-        document.getElementById("warrantyTitle").innerText =
-          "Masa Berlaku Garansi Produk";
-        document.getElementById("warrantyYear").innerText = "2034";
-
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-
-        setTimeout(function () {
-          alert("Selamat, Anda Berhasil Registrasi");
-        }, 350);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
       });
-    })();
-  </script>
+
+      setTimeout(function () {
+        alert("Selamat, Anda Berhasil Registrasi");
+      }, 350);
+    });
+  })();
+</script>
 </body>
 </html>
